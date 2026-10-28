@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Morning 💗</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            background: linear-gradient(135deg, #ffd6e7, #fff0c9, #dcd6ff);
+            background-size: 300% 300%;
+            animation: backgroundMove 8s ease infinite;
+        }
+
+        .card {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 440px;
+            padding: 32px 24px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid white;
+            border-radius: 28px;
+            box-shadow: 0 15px 45px rgba(180, 90, 140, 0.25);
+            animation: appear 0.8s ease;
+        }
+
+        .sun {
+            font-size: 55px;
+            animation: sunDance 2s infinite;
+        }
+
+        h1 {
+            color: #e84393;
+            font-size: clamp(26px, 6vw, 34px);
+            margin: 12px 0 20px;
+            animation: bounce 2s infinite;
+        }
+
+        h2 {
+            color: #e84393;
+        }
+
+        .question {
+            font-size: 21px;
+            color: #59415e;
+            font-weight: bold;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: appear 0.6s ease;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            border: 2px solid #ffc1dc;
+            border-radius: 14px;
+            font-size: 16px;
+            background: #fffaff;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #e84393;
+            box-shadow: 0 0 10px #ffc1dc;
+        }
+
+        .gender-options {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .gender-options label {
+            padding: 12px 18px;
+            border: 2px solid #ffd0e4;
+            border-radius: 14px;
+            cursor: pointer;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .gender-options label:has(input:checked) {
+            background: #ffe0ef;
+            border-color: #e84393;
+            transform: scale(1.05);
+        }
+
+        .gender-options input {
+            accent-color: #e84393;
+        }
+
+        button {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 7px;
+            color: white;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        button:hover {
+            transform: translateY(-4px) scale(1.06);
+            box-shadow: 0 7px 18px #e7b6d2;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .pink {
+            background: linear-gradient(45deg, #ff4f9a, #ff8bba);
+        }
+
+        .purple {
+            background: linear-gradient(45deg, #9470db, #b39af7);
+        }
+
+        .blue {
+            background: linear-gradient(45deg, #4f80ff, #8baaff);
+        }
+
+        .result {
+            margin-top: 22px;
+            color: #d63384;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1.7;
+        }
+
+        .small-note {
+            margin-top: 24px;
+            color: #987b98;
+            font-size: 13px;
+        }
+
+        /* Floating hearts */
+
+        .floating {
+            position: fixed;
+            bottom: -45px;
+            z-index: 1;
+            pointer-events: none;
+            animation: floatUp 7s linear forwards;
+        }
+
+        /* Birthday celebration */
+
+        .birthday-title {
+            color: #ff3290;
+            font-size: 30px;
+            animation: birthdayPop 0.7s ease, rainbowGlow 2s infinite alternate;
+        }
+
+        .cake {
+            display: inline-block;
+            font-size: 75px;
+            animation: cakeDance 1s infinite;
+        }
+
+        .birthday-message {
+            color: #a34792;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .confetti-piece {
+            position: fixed;
+            top: -20px;
+            z-index: 10;
+            width: 10px;
+            height: 16px;
+            pointer-events: none;
+            animation: confettiFall 4s linear forwards;
+        }
+
+        .error {
+            min-height: 20px;
+            color: #cc2772;
+            font-size: 14px;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes sunDance {
+            0%, 100% { transform: rotate(-12deg); }
+            50% { transform: rotate(12deg) scale(1.12); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            15% { opacity: 1; }
+            100% { transform: translateY(-115vh) rotate(300deg); opacity: 0; }
+        }
+
+        @keyframes birthdayPop {
+            0% { transform: scale(0.2) rotate(-10deg); }
+            70% { transform: scale(1.15) rotate(5deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        @keyframes cakeDance {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @keyframes rainbowGlow {
+            from { text-shadow: 0 0 5px #ffb6d9; }
+            to { text-shadow: 0 0 22px #ff69b4, 0 0 35px #ffd166; }
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(110vh) rotate(900deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .card {
+                padding: 26px 16px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="card">
+
+        <div class="sun">🌞</div>
+        <h1>Good Morning 💗</h1>
+
+        <!-- PAGE 1: ENTER NAME -->
+
+        <section id="nameStep" class="step active">
+            <p class="question">What is your name? 😊</p>
+
+            <form id="nameForm">
+                <input
+                    type="text"
+                    id="userName"
+                    placeholder="Enter your name..."
+                    maxlength="50"
+                    autocomplete="given-name"
+                    required
+                >
+
+                <p class="question">Are you a boy or a girl? 🧐</p>
+
+                <div class="gender-options">
+                    <label>
+                        <input type="radio" name="gender" value="boy" required>
+                        Boy 👦
+                    </label>
+
+                    <label>
+                        <input type="radio" name="gender" value="girl">
+                        Girl 👧
+                    </label>
+                </div>
+
+                <p id="nameError" class="error"></p>
+
+                <button class="pink" type="submit">
+                    Let's Go 💖
+                </button>
+            </form>
+        </section>
+
+        <!-- WAITING PAGE -->
+
+        <section id="waitingStep" class="step">
+            <h2 id="waitingMessage">Get ready! 😎</h2>
+            <p class="question">Your morning question is coming...</p>
+            <div style="font-size: 45px;">⏳💗✨</div>
+        </section>
+
+        <!-- PAGE 2: DID YOU EAT? -->
+
+        <section id="mealStep" class="step">
+            <p class="question" id="mealQuestion">Ate aa? 🍳</p>
+
+            <div>
+                <button id="yesBtn" class="pink" type="button">
+                    Yes 😋
+                </button>
+
+                <button id="noBtn" class="purple" type="button">
+                    No 🙄
+                </button>
+            </div>
+
+            <div id="mealResult" class="result" aria-live="polite"></div>
+        </section>
+
+        <!-- PAGE 3: DATE OF BIRTH -->
+
+        <section id="dobStep" class="step">
+            <p class="question">Enter your DOB 🎂</p>
+
+            <form id="dobForm">
+                <input
+                    type="date"
+                    id="dob"
+                    required
+                >
+
+                <button class="blue" type="submit">
+                    Check Birthday 🎉
+                </button>
+            </form>
+
+            <div id="dobError" class="error"></div>
+        </section>
+
+        <!-- PAGE 4: FINAL RESULT -->
+
+        <section id="finalStep" class="step">
+            <div id="finalResult" class="result" aria-live="polite"></div>
+
+            <button id="restartBtn" class="pink" type="button">
+                Start Again 🔄
+            </button>
+        </section>
+
+        <div class="small-note">
+            Made with 💗, sunshine and a little craziness ✨
+        </div>
+
+    </main>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+
+        let userName = "";
+        let gender = "";
+        let transitionTimer;
+
+        // Show one page at a time
+        function showStep(stepId) {
+            document.querySelectorAll(".step").forEach(step => {
+                step.classList.remove("active");
+            });
+
+            $(stepId).classList.remove("active");
+
+            // Restart the entry animation
+            void $(stepId).offsetWidth;
+            $(stepId).classList.add("active");
+        }
+
+        // PAGE 1: Save name and gender
+        $("nameForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            userName = $("userName").value.trim();
+
+            const selectedGender =
+                document.querySelector('input[name="gender"]:checked');
+
+            if (!userName || !selectedGender) {
+                $("nameError").textContent =
+                    "Please enter your name and select Boy or Girl.";
+                return;
+            }
+
+            gender = selectedGender.value;
+            $("nameError").textContent = "";
+
+            $("waitingMessage").textContent =
+                "Hey " + userName + "! 😎";
+
+            $("mealQuestion").textContent =
+                "Ate aa " + userName + "? 🍳";
+
+            showStep("waitingStep");
+
+            // After 3 seconds, ask the food question
+            clearTimeout(transitionTimer);
+            transitionTimer = setTimeout(function() {
+                showStep("mealStep");
+            }, 3000);
+        });
+
+        // PAGE 2: YES or NO
+        function answerMeal(answer) {
+            clearTimeout(transitionTimer);
+
+            $("yesBtn").disabled = true;
+            $("noBtn").disabled = true;
+
+            if (answer === "yes") {
+                if (gender === "boy") {
+                    $("mealResult").textContent = "Good boi 😊💙🐶";
+                } else {
+                    $("mealResult").textContent = "Good girl 😊💗🌸";
+                }
+            } else {
+                $("mealResult").textContent = "Eat eruma 😂🍚🐃";
+            }
+
+            celebrate(15);
+
+            // Ask for DOB after 3 seconds
+            transitionTimer = setTimeout(function() {
+                $("dobForm").reset();
+                $("dobError").textContent = "";
+                showStep("dobStep");
+            }, 3000);
+        }
+
+        $("yesBtn").addEventListener("click", function() {
+            answerMeal("yes");
+        });
+
+        $("noBtn").addEventListener("click", function() {
+            answerMeal("no");
+        });
+
+        // PAGE 3: Check if today is the user's birthday
+        $("dobForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const dobValue = $("dob").value;
+
+            if (!dobValue) {
+                $("dobError").textContent = "Please enter your DOB.";
+                return;
+            }
+
+            // Read date parts without UTC timezone conversion
+            const parts = dobValue.split("-").map(Number);
+            const birthYear = parts[0];
+            const birthMonth = parts[1];
+            const birthDay = parts[2];
+
+            const today = new Date();
+
+            // Birthday repeats each year, so compare day and month
+            const birthdayToday =
+                birthMonth === today.getMonth() + 1 &&
+                birthDay === today.getDate();
+
+            $("finalResult").replaceChildren();
+
+            if (birthdayToday) {
+                const cake = document.createElement("div");
+                cake.className = "cake";
+                cake.textContent = "🎂";
+
+                const heading = document.createElement("h2");
+                heading.className = "birthday-title";
+                heading.textContent =
+                    "HAPPY BIRTHDAY, " + userName + "! 🎉";
+
+                const message = document.createElement("p");
+                message.className = "birthday-message";
+
+                if (gender === "boy") {
+                    message.textContent =
+                        "Good boi! 🥳💙 Congratulations! " +
+                        "May your day be full of happiness, " +
+                        "laughter and success! 🎁🎈✨";
+                } else {
+                    message.textContent =
+                        "Congratulations, " + userName + "! 💖🌸 " +
+                        "May your special day be filled with " +
+                        "love, happiness and beautiful memories! 🎁🥳✨";
+                }
+
+                $("finalResult").append(cake, heading, message);
+
+                // Big birthday celebration!
+                celebrate(100);
+            } else {
+                const heading = document.createElement("h2");
+                heading.textContent = "Nice try! 😄🎂";
+
+                const message = document.createElement("p");
+                message.className = "birthday-message";
+                message.textContent =
+                    "Today isn't your birthday, " + userName +
+                    "! 💗 Have a wonderful day anyway! 🌷✨";
+
+                $("finalResult").append(heading, message);
+            }
+
+            showStep("finalStep");
+        });
+
+        // Floating hearts and emoji effects
+        function celebrate(count) {
+            const emojis = ["💗", "💕", "✨", "🌸", "💖", "🥳"];
+
+            for (let i = 0; i < count; i++) {
+                const item = document.createElement("span");
+
+                item.className = "floating";
+                item.textContent =
+                    emojis[Math.floor(Math.random() * emojis.length)];
+
+                item.style.left = Math.random() * 100 + "vw";
+                item.style.fontSize =
+                    (18 + Math.random() * 24) + "px";
+                item.style.animationDelay =
+                    Math.random() * 1.5 + "s";
+
+                document.body.appendChild(item);
+
+                setTimeout(() => item.remove(), 9000);
+            }
+        }
+
+        // Colourful birthday confetti
+        function birthdayConfetti() {
+            const colors = [
+                "#ff4f9a", "#ffd166", "#7c5cff",
+                "#4cc9f0", "#67d391", "#ff7043"
+            ];
+
+            for (let i = 0; i < 100; i++) {
+                const piece = document.createElement("span");
+
+                piece.className = "confetti-piece";
+                piece.style.left = Math.random() * 100 + "vw";
+                piece.style.backgroundColor =
+                    colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay =
+                    Math.random() * 2 + "s";
+                piece.style.animationDuration =
+                    (3 + Math.random() * 2) + "s";
+
+                document.body.appendChild(piece);
+
+                setTimeout(() => piece.remove(), 6000);
+            }
+        }
+
+        // Start floating emojis in the background
+        setInterval(function() {
+            const item = document.createElement("span");
+            item.className = "floating";
+            item.textContent = ["💕", "🌸", "✨", "💗"][
+                Math.floor(Math.random() * 4)
+            ];
+            item.style.left = Math.random() * 100 + "vw";
+
+            document.body.appendChild(item);
+            setTimeout(() => item.remove(), 7500);
+        }, 1000);
+
+        // Restart for another user
+        $("restartBtn").addEventListener("click", function() {
+            clearTimeout(transitionTimer);
+
+            $("nameForm").reset();
+            $("dobForm").reset();
+
+            $("mealResult").textContent = "";
+            $("finalResult").replaceChildren();
+            $("nameError").textContent = "";
+            $("dobError").textContent = "";
+
+            $("yesBtn").disabled = false;
+            $("noBtn").disabled = false;
+
+            userName = "";
+            gender = "";
+
+            showStep("nameStep");
+        });
+    </script>
+
+</body>
+</html>
